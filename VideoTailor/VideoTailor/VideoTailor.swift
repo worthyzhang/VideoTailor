@@ -11,7 +11,7 @@ import AVFoundation
 
 public protocol VideoTailorDelegate: class {
     func exportFailed(error: Error?)
-    func exportSuccess()
+    func exportSuccess(outputUrl: URL)
     func exportProgress(progress: CGFloat)
 }
 
@@ -20,7 +20,7 @@ public class VideoTailor: NSObject {
     // public
     public weak var delegate: VideoTailorDelegate?
     public var exportFailedHandler: ((_ error: Error?)->Void)?
-    public var exportSuccessHandler: (()->Void)?
+    public var exportSuccessHandler: ((_ outputUrl: URL)->Void)?
     public var exportProgressHandler: ((_ progress: CGFloat)->Void)?
     
     public var outputSize: CGSize?
@@ -29,6 +29,7 @@ public class VideoTailor: NSObject {
     public var bitRate: Int64?
     public var profile: String?
     public var fileType: String?
+    public var outputUrl: URL?
     
     // private
     var writer: AVAssetWriter?
@@ -73,6 +74,7 @@ public class VideoTailor: NSObject {
     }
     
     func export(_ asset: AVAsset, _ outputUrl: URL) {
+        self.outputUrl = outputUrl
         setupExportSession(asset, outputUrl)
         startExportSession()
     }
@@ -280,20 +282,26 @@ public class VideoTailor: NSObject {
     // MARK: handler
     
     func failedHandler(error: Error?) {
-        delegate?.exportFailed(error: error)
-        exportFailedHandler?(error)
+        DispatchQueue.main.async {
+            self.delegate?.exportFailed(error: error)
+            self.exportFailedHandler?(error)
+        }
     }
     
     func successHandler() {
-        delegate?.exportProgress(progress: 1.0)
-        delegate?.exportSuccess()
-        exportProgressHandler?(1.0)
-        exportSuccessHandler?()
+        DispatchQueue.main.async {
+            self.delegate?.exportProgress(progress: 1.0)
+            self.delegate?.exportSuccess(outputUrl: self.outputUrl!)
+            self.exportProgressHandler?(1.0)
+            self.exportSuccessHandler?(self.outputUrl!)
+        }
     }
     
     func progressHandler(progress: CGFloat) {
-        delegate?.exportProgress(progress: progress)
-        exportProgressHandler?(progress)
+        DispatchQueue.main.async {
+            self.delegate?.exportProgress(progress: progress)
+            self.exportProgressHandler?(progress)
+        }
     }
     
     // MARK: configuration

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5ABA17C41DDDD81600DC14A6 /* CutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA17C31DDDD81600DC14A6 /* CutViewController.swift */; };
+		5ABA17C61DDDD9C300DC14A6 /* VideoCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA17C51DDDD9C300DC14A6 /* VideoCropView.swift */; };
 		5AC5477D1DDC836900CD1B93 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC5477C1DDC836900CD1B93 /* AppDelegate.swift */; };
 		5AC5477F1DDC836900CD1B93 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC5477E1DDC836900CD1B93 /* ViewController.swift */; };
 		5AC547821DDC836900CD1B93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC547801DDC836900CD1B93 /* Main.storyboard */; };
@@ -42,6 +44,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5ABA17C31DDDD81600DC14A6 /* CutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CutViewController.swift; sourceTree = "<group>"; };
+		5ABA17C51DDDD9C300DC14A6 /* VideoCropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCropView.swift; sourceTree = "<group>"; };
 		5AC547791DDC836900CD1B93 /* VideoTailorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoTailorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC5477C1DDC836900CD1B93 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AC5477E1DDC836900CD1B93 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 			children = (
 				5AC5477C1DDC836900CD1B93 /* AppDelegate.swift */,
 				5AC5477E1DDC836900CD1B93 /* ViewController.swift */,
+				5ABA17C31DDDD81600DC14A6 /* CutViewController.swift */,
+				5ABA17C51DDDD9C300DC14A6 /* VideoCropView.swift */,
 				5AC547801DDC836900CD1B93 /* Main.storyboard */,
 				5AC547831DDC836900CD1B93 /* Assets.xcassets */,
 				5AC547851DDC836900CD1B93 /* LaunchScreen.storyboard */,
@@ -220,7 +226,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ABA17C61DDDD9C300DC14A6 /* VideoCropView.swift in Sources */,
 				5AC5477F1DDC836900CD1B93 /* ViewController.swift in Sources */,
+				5ABA17C41DDDD81600DC14A6 /* CutViewController.swift in Sources */,
 				5AC5477D1DDC836900CD1B93 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,6 +370,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TJV6VLRJLL;
 				INFOPLIST_FILE = VideoTailorDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.worthy.VideoTailorDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -377,6 +386,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = VideoTailorDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.worthy.VideoTailorDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
