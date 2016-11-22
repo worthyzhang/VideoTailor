@@ -82,6 +82,8 @@ public class VideoTailor: NSObject {
     // MARK: export session
     
     func setupExportSession(_ asset: AVAsset,_ outputUrl: URL) {
+        // optional settings
+        configureOptionalSettings(asset: asset)
         
         // composition
         let composition = createComposition(asset: asset)
@@ -180,26 +182,33 @@ public class VideoTailor: NSObject {
         }
     }
     
+    func configureOptionalSettings(asset: AVAsset) {
+        let videoTrack = asset.tracks(withMediaType: AVMediaTypeVideo).first
+        let audioTrack = asset.tracks(withMediaType: AVMediaTypeAudio).first
+        let inputSize = transformedSize(videoTrack!)
+        var bitRateRatio: Float = 1.0
+        if outputSize == nil {
+            outputSize = inputSize
+        }else {
+            bitRateRatio = Float(outputSize!.width*outputSize!.height/(inputSize.width*inputSize.height))
+        }
+        if bitRate == nil {
+            bitRate = Int64(audioTrack!.estimatedDataRate + videoTrack!.estimatedDataRate * bitRateRatio)
+        }
+        if timeRange == nil {
+            timeRange = videoTrack?.timeRange
+        }
+        if rect == nil {
+            rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        }
+    }
+    
     func createComposition(asset: AVAsset) -> AVMutableComposition {
         let composition = AVMutableComposition()
         let compositionVideoTrack = composition.addMutableTrack(withMediaType: AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
         let compositionAudioTrack = composition.addMutableTrack(withMediaType: AVMediaTypeAudio, preferredTrackID: kCMPersistentTrackID_Invalid)
         let sourceVideoTrack = asset.tracks(withMediaType: AVMediaTypeVideo).first
         let sourceAudioTrack = asset.tracks(withMediaType: AVMediaTypeAudio).first
-        
-        // set optional values
-        if bitRate == nil {
-            bitRate = Int64(sourceAudioTrack!.estimatedDataRate + sourceVideoTrack!.estimatedDataRate)
-        }
-        if timeRange == nil {
-            timeRange = sourceVideoTrack?.timeRange
-        }
-        if outputSize == nil {
-            outputSize = transformedSize(sourceVideoTrack!)
-        }
-        if rect == nil {
-            rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-        }
         
         // add tracks
         if let track = sourceVideoTrack {
@@ -268,6 +277,8 @@ public class VideoTailor: NSObject {
         
         return videoComposition
     }
+    
+    // MARK: tool
     
     func transformedSize(_ videoTrack: AVAssetTrack) -> CGSize{
         let naturalSize = videoTrack.naturalSize
